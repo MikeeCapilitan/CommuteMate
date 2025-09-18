@@ -4,17 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CommuteMate - Dashboard</title>
-  <!-- Google Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
     body {
       background: #cdd9f4;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      margin: 0;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
     }
 
     .phone {
@@ -35,11 +34,11 @@
       flex: 1;
       background: linear-gradient(to bottom, #f0f4ff, #dbeafe);
       border-radius: 24px;
-      padding: 20px;
+      padding: 50px 20px 70px;
       display: flex;
       flex-direction: column;
+      box-sizing: border-box;
       overflow: hidden;
-      position: relative;
     }
 
     .notch {
@@ -53,18 +52,6 @@
       top: 0;
       left: 0;
       right: 0;
-    }
-
-    .screen-content {
-      flex: 1;
-      display: none; /* hide all screens initially */
-      flex-direction: column;
-      overflow-y: auto;
-      padding: 10px;
-    }
-
-    .screen-content.active {
-      display: flex; /* show active screen */
     }
 
     .header {
@@ -84,7 +71,6 @@
       color: #475569;
     }
 
-    /* Home Screen Features */
     .features {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -97,14 +83,8 @@
       padding: 14px 12px;
       box-shadow: 0 6px 12px rgba(29,78,216,0.15);
       text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .feature.smart {
-      border-left: 4px solid #3b82f6;
     }
 
     .feature:hover {
@@ -137,63 +117,11 @@
       line-height: 1.2;
     }
 
-    /* Profile Card */
-    .profile-card, .settings-card {
-      background: white;
-      border-radius: 24px;
-      padding: 20px;
-      box-shadow: 0 6px 20px rgba(29,78,216,0.2);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: auto; /* center vertically */
-      width: 90%;
+    .feature.smart {
+      box-shadow: 0 6px 16px rgba(29,78,216,0.25);
+      border: 2px solid #3b82f6;
     }
 
-    .profile-card img, .settings-card img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      margin-bottom: 12px;
-    }
-
-    .profile-card h2, .settings-card h2 {
-      font-size: 18px;
-      color: #1e3a8a;
-      margin-bottom: 8px;
-    }
-
-    .profile-card p, .settings-card p {
-      font-size: 13px;
-      color: #475569;
-      margin: 2px 0;
-    }
-
-    .settings-card button {
-      margin-top: 12px;
-      padding: 10px 16px;
-      border: none;
-      border-radius: 12px;
-      background: #3b82f6;
-      color: white;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .settings-card button:hover {
-      background: #2563eb;
-    }
-
-    .settings-card .logout {
-      background: #ef4444;
-    }
-
-    .settings-card .logout:hover {
-      background: #b91c1c;
-    }
-
-    /* Bottom Navigation */
     .bottom-nav {
       position: absolute;
       bottom: 0;
@@ -205,6 +133,7 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
+      border-radius: 0 0 24px 24px;
       overflow: visible;
     }
 
@@ -214,8 +143,13 @@
       color: #64748b;
       font-size: 12px;
       cursor: pointer;
-      position: relative;
       transition: color 0.3s ease, transform 0.3s ease;
+      position: relative;
+    }
+
+    .nav-item:hover {
+      color: #1d4ed8;
+      transform: translateY(-4px);
     }
 
     .nav-item span {
@@ -225,34 +159,37 @@
       transition: transform 0.3s ease;
     }
 
-    .nav-item:hover span {
-      transform: scale(1.2);
-      color: #1d4ed8;
-    }
-
-    /* Mountain-shaped active tab */
     .nav-item.active {
       color: #1d4ed8;
       font-weight: 600;
+      background: #dbeafe;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: -25px auto 0;
+      box-shadow: 0 4px 12px rgba(29,78,216,0.3);
+      transition: all 0.3s ease;
     }
 
+    /* Add side highlights like Smart Reroute cards */
     .nav-item.active::before {
       content: '';
       position: absolute;
-      top: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 70px;
-      height: 35px;
-      background: #dbeafe;
-      border-radius: 35px 35px 0 0;
-      box-shadow: 0 4px 12px rgba(29,78,216,0.3);
+      top: -5px;
+      left: -6px;
+      width: calc(100% + 12px);
+      height: calc(100% + 10px);
+      border: 2px solid #3b82f6;
+      border-radius: 50%;
       z-index: -1;
     }
 
     .nav-item.active span {
-      transform: translateY(-12px);
       font-size: 22px;
+      margin-bottom: 0;
     }
 
   </style>
@@ -260,13 +197,12 @@
 <body>
   <div class="phone">
     <div class="notch"></div>
-
-    <!-- Home Screen -->
-    <div class="screen-content home active">
+    <div class="screen">
       <div class="header">
         <h1>CommuteMate</h1>
         <p>Smart Commuting for Every Filipino</p>
       </div>
+
       <div class="features">
         <div class="feature smart">
           <span class="icon material-icons">location_on</span>
@@ -299,67 +235,20 @@
       </div>
     </div>
 
-    <!-- Profile Screen -->
-    <div class="screen-content profile">
-      <div class="profile-card">
-        <img src="https://i.pravatar.cc/150?img=3" alt="Profile Picture">
-        <h2>J@m3z rEdd</h2>
-        <p>ID: 12345678</p>
-        <p>Course: BSIT</p>
-        <p>Email: jims@gmail.com</p>
-      </div>
-    </div>
-
-    <!-- Settings Screen -->
-    <div class="screen-content settings">
-      <div class="settings-card">
-        <h2>Settings</h2>
-        <p>Notification Preferences</p>
-        <p>Privacy & Security</p>
-        <p>App Version: 1.0.0</p>
-        <button>Update Settings</button>
-        <button class="logout">Logout</button>
-      </div>
-    </div>
-
-    <!-- Bottom Navigation -->
     <div class="bottom-nav">
-      <div class="nav-item active" data-screen="home">
+      <div class="nav-item active">
         <span class="material-icons">home</span>
         Home
       </div>
-      <div class="nav-item" data-screen="profile">
+      <div class="nav-item">
         <span class="material-icons">person</span>
         Profile
       </div>
-      <div class="nav-item" data-screen="settings">
+      <div class="nav-item">
         <span class="material-icons">settings</span>
         Settings
       </div>
     </div>
   </div>
-
-  <script>
-    const navItems = document.querySelectorAll('.nav-item');
-    const screens = document.querySelectorAll('.screen-content');
-
-    navItems.forEach(item => {
-      item.addEventListener('click', () => {
-        // Remove active from nav
-        navItems.forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
-
-        // Show corresponding screen
-        const target = item.dataset.screen;
-        screens.forEach(screen => {
-          if(screen.classList.contains(target)){
-            screen.classList.add('active');
-          } else {
-            screen.classList.remove('active');
-          }
-        });
-      });
-    });
-  </script>
 </body>
 </html>
